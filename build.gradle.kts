@@ -11,16 +11,22 @@ application {
     applicationName = "nais-deploy-kayak"
     mainClassName = "no.nav.nada.NaisDeployKayakKt"
 }
-
+val githubUser: String? by project
+val githubPassword: String? by project
 repositories {
     jcenter()
     mavenCentral()
     maven {
-        name = "nav-gpr"
-        url = uri("https://maven.pkg.github.com/navikt")
+        name = "Confluent"
+        url = uri("http://packages.confluent.io/maven")
+    }
+    maven(url = "https://jitpack.io")
+    maven {
+        name = "nav-devrapid-schema"
+        url = uri("https://maven.pkg.github.com/navikt/nada-devrapid-schema")
         credentials {
-            username = project.findProperty("gpr.user") as String? ?: "x-access-token"
-            password = project.findProperty("gpr.password") as String? ?: System.getenv("GITHUB_TOKEN")
+            username = githubUser ?: "x-access-token"
+            password = githubPassword ?: System.getenv("GITHUB_TOKEN")
         }
     }
 }
@@ -45,6 +51,15 @@ dependencies {
     implementation(Prometheus.library("common"))
     implementation(Prometheus.library("log4j2"))
     implementation(Micrometer.prometheusRegistry)
+
+    // Kafka
+    implementation(Kafka.clients)
+    implementation(Confluent.avroSerializer)
+    implementation(Nada.devRapidSchema)
+    implementation(Protobuf.java)
+
+    // Konfiguration
+    implementation(Konfig.konfig)
 }
 
 tasks.withType<Test> {

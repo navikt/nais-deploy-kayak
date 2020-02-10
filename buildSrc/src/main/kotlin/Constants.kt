@@ -63,10 +63,18 @@ object Micrometer {
     const val version = "1.3.3"
     const val prometheusRegistry = "io.micrometer:micrometer-registry-prometheus:$version"
 }
-
+object Nada {
+    const val version = "1.0.4"
+    const val devRapidSchema = "no.nav.nada:nada-devrapid-schema:$version"
+}
 object Prometheus {
     const val version = "0.8.0"
     fun library(name: String) = "io.prometheus:simpleclient_$name:$version"
+}
+
+object Protobuf {
+    const val version = "3.11.3"
+    const val java = "com.google.protobuf:protobuf-java:$version"
 }
 
 object Shadow {
