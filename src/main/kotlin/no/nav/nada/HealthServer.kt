@@ -38,7 +38,7 @@ object HealthServer {
                     PrometheusMeterRegistry(PrometheusConfig.DEFAULT, CollectorRegistry.defaultRegistry, Clock.SYSTEM)
             }
             install(ContentNegotiation) {
-                serialization()
+                json()
             }
             routing {
                 get("/prometheus") {
